@@ -44,7 +44,7 @@ module.exports = {
       </div>
 
       <div
-        v-else
+        v-else-if="wallet"
         class="flex flex-col flex-1 overflow-y-hidden"
       >
         <Header
@@ -116,25 +116,27 @@ module.exports = {
   async mounted () {
     this.wallet = this.wallets.find(wallet => wallet.address === this.address)
 
-    try {
-      this.isLoading = true
+    if (this.wallet) {
+      try {
+        this.isLoading = true
 
-      await this.fetchDelegates()
+        await this.fetchDelegates()
 
-      if (this.wallet.vote === undefined) {
-        try {
-          const { data } = await walletApi.peers.current.get(`wallets/${this.wallet.address}`)
-          this.wallet.vote = data.vote
-        } catch (error) {
-          walletApi.alert.error('Failed to fetch wallet vote')
+        if (this.wallet.vote === undefined) {
+          try {
+            const { data } = await walletApi.peers.current.get(`wallets/${this.wallet.address}`)
+            this.wallet.vote = data.vote
+          } catch (error) {
+            walletApi.alert.error('Failed to fetch wallet vote')
+          }
         }
-      }
 
-      this.calculateTableData()
-    } catch (error) {
-      walletApi.alert.error('Failed to fetch delegate data')
-    } finally {
-      this.isLoading = false
+        this.calculateTableData()
+      } catch (error) {
+        walletApi.alert.error('Failed to fetch delegate data')
+      } finally {
+        this.isLoading = false
+      }
     }
   },
 
@@ -148,7 +150,15 @@ module.exports = {
     },
 
     address () {
-      return walletApi.storage.get('address') || this.wallets[0].address
+      let address
+
+      try {
+        address = walletApi.storage.get('address') || (this.hasWallets ? this.wallets[0].address : '')
+      } catch (error) {
+        address = ''
+      }
+
+      return address
     },
 
     wallets () {
@@ -156,7 +166,7 @@ module.exports = {
     },
 
     hasWallets () {
-      return this.profile.wallets && this.profile.wallets.length
+      return !!(this.wallets && this.wallets.length)
     },
 
     hasWrongNetwork () {
