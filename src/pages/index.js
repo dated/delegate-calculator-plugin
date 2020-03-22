@@ -210,7 +210,7 @@ module.exports = {
 
         this.selectedDelegate = {
           ...delegate,
-          votes: new walletApi.utils.bigNumber(delegate.votes).minus(this.wallet.balance).toString()
+          votes: Number(delegate.votes) - Number(this.wallet.balance)
         }
       }
     },
@@ -276,10 +276,10 @@ module.exports = {
         }
 
         if (!newDelelegate.isVoted) {
-          newDelelegate.votes = new walletApi.utils.bigNumber(delegate.votes).plus(this.wallet.balance).toString()
+          newDelelegate.votes = Number(delegate.votes) + Number(this.wallet.balance)
         }
 
-        newDelelegate.rewards = new walletApi.utils.bigNumber(this.wallet.balance).dividedBy(delegate.votes).times(422 * delegate.payout.percentage / 100).toNumber()
+        newDelelegate.rewards = Number(this.wallet.balance) / Number(delegate.votes) * 422 * delegate.payout.percentage / 100
 
         return newDelelegate
       })

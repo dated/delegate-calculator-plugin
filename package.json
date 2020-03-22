@@ -19,7 +19,6 @@
       "PROFILE_CURRENT",
       "PEER_CURRENT",
       "HTTP",
-      "UTILS",
       "ALERTS",
       "STORAGE"
     ],

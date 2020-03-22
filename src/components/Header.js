@@ -75,7 +75,7 @@ module.exports = {
     },
 
     formatCurrency (value, currency) {
-      const balance = new walletApi.utils.bigNumber(value).dividedBy(1e8).toString()
+      const balance = Number(value) / 1e8
       return utils.formatter_currency(balance, currency, this.profile.language)
     }
   }
