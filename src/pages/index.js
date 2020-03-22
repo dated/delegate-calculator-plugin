@@ -138,23 +138,6 @@ module.exports = {
     }
   },
 
-  watch: {
-    async address (address) {
-      this.wallet = this.wallets.find(wallet => wallet.address === address)
-
-      if (this.wallet.vote === undefined) {
-        try {
-          const { data } = await walletApi.peers.current.get(`wallets/${address}`)
-          this.wallet.vote = data.vote
-        } catch (error) {
-          walletApi.alert.error('Failed to fetch wallet vote')
-        }
-      }
-
-      this.calculateTableData()
-    }
-  },
-
   computed: {
     logoImage () {
       return ImageService.image('logo')
@@ -199,6 +182,17 @@ module.exports = {
         const wallet = this.wallets.find(wallet => wallet.address === options.address)
 
         walletApi.storage.set('address', options.address)
+
+        if (this.wallet.vote === undefined) {
+          try {
+            const { data } = await walletApi.peers.current.get(`wallets/${options.address}`)
+            this.wallet.vote = data.vote
+          } catch (error) {
+            walletApi.alert.error('Failed to fetch wallet vote')
+          }
+        }
+
+        this.calculateTableData()
       }
     },
 
