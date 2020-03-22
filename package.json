@@ -1,0 +1,48 @@
+{
+  "name": "@dated/delegate-calculator-plugin",
+  "version": "0.0.1",
+  "description": "Compare delegate payouts and get an overview of your potential staking rewards directly in the ARK Desktop Wallet",
+  "main": "src/index.js",
+  "author": "Edgar Goetzendorff <hello@dated.fun>",
+  "license": "MIT",
+  "desktop-wallet": {
+    "title": "ARK Delegate Calculator",
+    "logo": "https://raw.githubusercontent.com/dated/delegate-calculator-plugin/master/logo.png",
+    "categories": [
+      "utility"
+    ],
+    "permissions": [
+      "COMPONENTS",
+      "ROUTES",
+      "MENU_ITEMS",
+      "UI_COMPONENTS",
+      "PROFILE_CURRENT",
+      "PEER_CURRENT",
+      "HTTP",
+      "UTILS",
+      "ALERTS",
+      "STORAGE"
+    ],
+    "urls": [
+      "^"
+    ],
+    "minVersion": "2.6.0"
+  },
+  "keywords": [
+    "utility",
+    "rewards",
+    "staking",
+    "delegates",
+    "@arkecosystem",
+    "desktop-wallet",
+    "plugin"
+  ],
+  "bugs": {
+    "url": "https://github.com/dated/delegate-calculator-plugin/issues"
+  },
+  "homepage": "https://github.com/dated/delegate-calculator-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dated/delegate-calculator-plugin.git"
+  }
+}
