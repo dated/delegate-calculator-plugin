@@ -1,6 +1,6 @@
 {
   "name": "@dated/delegate-calculator-plugin",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Compare delegate payouts and get an overview of your potential staking rewards directly in the ARK Desktop Wallet",
   "main": "src/index.js",
   "author": "Edgar Goetzendorff <hello@dated.fun>",
