@@ -3,17 +3,17 @@ const utils = require('../utils')
 module.exports = {
   template: `
     <div class="flex w-full items-center mb-3 py-8 px-10 rounded-lg bg-theme-feature">
-      <div class="flex items-center">
+      <div
+        v-if="wallet"
+        class="flex items-center"
+      >
         <WalletIdenticon
           :value="wallet.address"
           :size="50"
           class="flex-inline mr-4"
         />
 
-        <div
-          v-if="wallet"
-          class="flex flex-col pr-12"
-        >
+        <div class="flex flex-col pr-12">
           <span class="text-sm text-theme-page-text-light font-semibold mb-1">
             Address
           </span>

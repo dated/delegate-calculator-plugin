@@ -46,12 +46,20 @@ module.exports = {
                 Unclaimed
               </span>
 
-              <template v-else>
+              <div
+                v-else
+                class="flex mt-1"
+              >
                 <span
-                  v-if="data.row.isPrivate"
-                  class="mt-1"
+                  v-tooltip="{
+                    content: data.row.isPrivate ? 'You may not receive any rewards from this delegate' : '',
+                    trigger: 'hover',
+                    classes: 'text-xs',
+                    placement: 'right'
+                  }"
+                  class="pr-1"
                 >
-                  Private
+                  {{ data.row.isPrivate ? 'Private' : 'Public' }}
                 </span>
 
                 <span
@@ -62,12 +70,11 @@ module.exports = {
                     classes: 'text-xs',
                     placement: 'right'
                   }"
-                  :class="{ 'ml-2 pl-2 border-l border-theme-line-separator': data.row.isPrivate }"
-                  class="mt-1 pr-1"
+                  class="ml-1 pl-2 pr-1 border-l border-theme-line-separator"
                 >
                   {{ getContributionsStatus(data.row.contributions.status) }}
                 </span>
-              </template>
+              </div>
             </div>
           </div>
         </div>
@@ -126,10 +133,6 @@ module.exports = {
     },
     perPage: {
       type: Number,
-      required: true
-    },
-    vote: {
-      type: String,
       required: true
     },
     callback: {

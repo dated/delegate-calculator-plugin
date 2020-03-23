@@ -72,7 +72,6 @@ module.exports = {
                 :rows="delegates"
                 :current-page="1"
                 :per-page="51"
-                :vote="wallet.vote || ''"
                 :callback="handleEvent"
               />
             </div>
@@ -101,6 +100,7 @@ module.exports = {
   },
 
   data: () => ({
+    address: '',
     isLoading: false,
     wallet: {
       address: '',
@@ -114,7 +114,17 @@ module.exports = {
   }),
 
   async mounted () {
+    this.address = walletApi.storage.get('address')
+
     this.wallet = this.wallets.find(wallet => wallet.address === this.address)
+
+    if (!this.wallet) {
+      try {
+        this.wallet = this.wallets[0]
+      } catch (error) {
+        //
+      }
+    }
 
     if (this.wallet) {
       try {
@@ -122,7 +132,7 @@ module.exports = {
 
         await this.fetchDelegates()
 
-        if (this.wallet.vote === undefined) {
+        if (!Object.prototype.hasOwnProperty.call(this.wallet, 'vote')) {
           try {
             const { data } = await walletApi.peers.current.get(`wallets/${this.wallet.address}`)
             this.wallet.vote = data.vote
@@ -147,18 +157,6 @@ module.exports = {
 
     profile () {
       return walletApi.profiles.getCurrent()
-    },
-
-    address () {
-      let address
-
-      try {
-        address = walletApi.storage.get('address') || (this.hasWallets ? this.wallets[0].address : '')
-      } catch (error) {
-        address = ''
-      }
-
-      return address
     },
 
     wallets () {
@@ -189,13 +187,16 @@ module.exports = {
 
     async __handleHeaderEvent (event, options) {
       if (event === 'addressChange') {
-        const wallet = this.wallets.find(wallet => wallet.address === options.address)
+        this.address = options.address
 
-        walletApi.storage.set('address', options.address)
+        // TODO: move to watcher in future version
+        walletApi.storage.set('address', this.address)
+
+        const wallet = this.wallets.find(wallet => wallet.address === this.address)
 
         if (this.wallet.vote === undefined) {
           try {
-            const { data } = await walletApi.peers.current.get(`wallets/${options.address}`)
+            const { data } = await walletApi.peers.current.get(`wallets/${this.address}`)
             this.wallet.vote = data.vote
           } catch (error) {
             walletApi.alert.error('Failed to fetch wallet vote')
