@@ -121,7 +121,7 @@ module.exports = {
 
       <template #footer>
         <footer class="rounded-lg mt-2 text-sm shadow bg-yellow-lighter text-grey-darkest px-16 py-8">
-          Visit <span class="font-semibold">https://arkdelegates.live/delegate/{{ delegate.name }}</span> for the full proposal
+          Visit <span class="font-semibold">https://arkdelegates.live/delegate/{{ delegate.name }}</span> for more information
         </footer>
       </template>
     </ModalWindow>

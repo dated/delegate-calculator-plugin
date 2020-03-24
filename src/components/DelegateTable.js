@@ -212,9 +212,5 @@ module.exports = {
     getContributionsStatus (status) {
       return `${utils.upperFirst(status)} Contributor`
     }
-
-    // emitCurrentPageChange ({ currentPage }) {
-    //   this.executeCallback('currentPageChange', { currentPage })
-    // }
   }
 }
