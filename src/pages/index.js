@@ -1,6 +1,7 @@
 const DelegateModal = require('../components/modals/DelegateModal')
 const DelegateTable = require('../components/DelegateTable')
 const DisclaimerModal = require('../components/modals/DisclaimerModal')
+const Footer = require('../components/Footer')
 const Header = require('../components/Header')
 
 const ImageService = require('../services/image.service.js')
@@ -89,6 +90,8 @@ module.exports = {
         v-if="!options.hasAcceptedDisclaimer"
         :callback="handleEvent"
       />
+
+      <Footer />
     </div>
   `,
 
@@ -96,6 +99,7 @@ module.exports = {
     DelegateModal,
     DisclaimerModal,
     DelegateTable,
+    Footer,
     Header
   },
 
