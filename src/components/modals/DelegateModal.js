@@ -120,8 +120,18 @@ module.exports = {
       </span>
 
       <template #footer>
-        <footer class="rounded-lg mt-2 text-sm shadow bg-yellow-lighter text-grey-darkest px-16 py-8">
-          Visit <span class="font-semibold">https://arkdelegates.live/delegate/{{ delegate.name }}</span> for more information
+        <footer class="flex items-center rounded-lg mt-2 text-sm shadow bg-yellow-lighter text-grey-darkest px-16 py-8">
+          <p>
+            Visit
+            <span class="inline-flex items-center font-semibold">
+              {{ url }}
+              <ButtonClipboard
+                :value="url"
+                class="text-theme-modal-footer-button-text pl-1"
+              />
+            </span>
+            for more information
+          </p>
         </footer>
       </template>
     </ModalWindow>
@@ -145,6 +155,10 @@ module.exports = {
 
     statusText () {
       return utils.upperFirst(this.delegate.contributions.status)
+    },
+
+    url () {
+      return `https://arkdelegates.live/delegate/${this.delegate.slug}`
     }
   },
 
@@ -161,8 +175,7 @@ module.exports = {
     },
 
     formatCurrency (value, currency) {
-      const balance = Number(value) / 1e8
-      return utils.formatter_currency(balance, currency, this.profile.language)
+      return utils.formatter_currency(Number(value) / 1e8, currency, this.profile.language)
     }
   }
 }

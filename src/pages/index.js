@@ -255,6 +255,7 @@ module.exports = {
         return {
           rank: delegate.rank,
           name: delegate.name,
+          slug: delegate.slug,
           votes: delegate.delegateStatistics.voting_power,
           publicKey: delegate.public_key,
           website: delegate.website,
