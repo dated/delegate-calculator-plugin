@@ -196,9 +196,9 @@ module.exports = {
         // TODO: move to watcher in future version
         walletApi.storage.set('address', this.address)
 
-        const wallet = this.wallets.find(wallet => wallet.address === this.address)
+        this.wallet = this.wallets.find(wallet => wallet.address === this.address)
 
-        if (this.wallet.vote === undefined) {
+        if (!Object.prototype.hasOwnProperty.call(this.wallet, 'vote')) {
           try {
             const { data } = await walletApi.peers.current.get(`wallets/${this.address}`)
             this.wallet.vote = data.vote
