@@ -280,18 +280,18 @@ module.exports = {
 
     calculateTableData () {
       let delegates = this.delegateData.map(delegate => {
-        const newDelelegate = {
+        const newDelegate = {
           ...delegate,
           isVoted: delegate.publicKey === this.wallet.vote
         }
 
-        if (!newDelelegate.isVoted) {
-          newDelelegate.votes = Number(delegate.votes) + Number(this.wallet.balance)
+        if (!newDelegate.isVoted) {
+          newDelegate.votes = Number(delegate.votes) + Number(this.wallet.balance)
         }
 
-        newDelelegate.rewards = Number(this.wallet.balance) / Number(delegate.votes) * 422 * delegate.payout.percentage / 100
+        newDelegate.rewards = Number(this.wallet.balance) / Number(newDelegate.votes) * 422 * delegate.payout.percentage / 100
 
-        return newDelelegate
+        return newDelegate
       })
 
       const votedDelegate = delegates.find(delegate => delegate.isVoted)
