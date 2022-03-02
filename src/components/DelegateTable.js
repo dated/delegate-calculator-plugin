@@ -80,7 +80,7 @@ module.exports = {
         </div>
 
         <div
-          v-else-if="data.column.field === 'rewards'"
+          v-else-if="data.column.id === 'daily-rewards'"
           class="flex flex-col"
         >
           {{ data.row.rewards ? data.row.rewards.toFixed(8) : 'None' }}
@@ -94,7 +94,7 @@ module.exports = {
         </div>
 
         <div
-          v-else-if="data.column.field === 'weeklyRewards'"
+          v-else-if="data.column.id === 'weekly-rewards'"
           class="flex flex-col"
         >
           {{ data.row.rewards ? (data.row.rewards * 7).toFixed(8) : 'None' }}
@@ -149,15 +149,16 @@ module.exports = {
           field: 'name'
         },
         {
+          id: 'daily-rewards',
           label: 'Daily Rewards',
-          field: 'rewards',
+          field: (row) => row.rewards,
           type: 'number'
         },
         {
+          id: 'weekly-rewards',
           label: 'Weekly Rewards',
-          field: 'weeklyRewards',
+          field: (row) => row.rewards,
           type: 'number',
-          sortFn: this.sortByRewards
         },
         {
           label: 'Payout',
@@ -188,10 +189,6 @@ module.exports = {
 
     emitOpenDelegateModal (name) {
       this.executeCallback('openDelegateModal', { name })
-    },
-
-    sortByRewards (x, y, col, rowX, rowY) {
-      return rowX.rewards.toString().localeCompare(rowY.rewards.toString(), undefined, { sensitivity: 'base', numeric: true })
     },
 
     showContributorStatus ({ count, status }) {
